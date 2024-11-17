@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mini Tetris Plus</title>
+    <style>
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #7fcdff 0%, #92effd 100%);
+            font-family: "Comic Sans MS", cursive, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .game-container {
+            display: flex;
+            gap: 20px;
+            padding: 20px;
+            align-items: flex-start;
+        }
+
+        /* 侧边面板样式 */
+        .side-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            width: 120px;
+        }
+
+        /* 卡片通用样式 */
+        .panel-card {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        /* 标签样式 */
+        .panel-label {
+            color: #666;
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        /* 数值显示 */
+        #score, #movesLeft {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        /* 目标项样式 */
+        .goal-items {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .goal-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            font-size: 16px;
+            color: #333;
+        }
+
+        .goal-item .emoji {
+            font-size: 20px;
+        }
+
+        /* 道具项样式优化 */
+        .power-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .power-item:hover {
+            background-color: rgba(74, 144, 226, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .power-item.selected {
+            background-color: rgba(74, 144, 226, 0.2);
+            box-shadow: 0 0 10px rgba(74, 144, 226, 0.5);
+            transform: scale(1.05);
+        }
+
+        .power-icon {
+            font-size: 24px;
+            transition: transform 0.3s ease;
+        }
+
+        .power-item:hover .power-icon {
+            transform: scale(1.1);
+        }
+
+        .power-item:active .power-icon {
+            transform: scale(0.9);
+        }
+
+        .power-count {
+            font-size: 18px;
+            color: #4a90e2;
+            font-weight: bold;
+        }
+
+        /* 添加道具不可用状态样式 */
+        .power-item[data-count="0"] {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* 添加提示文本样式 */
+        .power-tooltip {
+            position: absolute;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .power-item:hover .power-tooltip {
+            opacity: 1;
+        }
+
+        /* 游戏区域样式保持不变 */
+        .game-area {
+            background: rgba(0, 0, 0, 0.6);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        canvas {
+            border-radius: 12px;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="cloud cloud-1"></div>
+    <div class="cloud cloud-2"></div>
+    
+    <div class="vine-decoration top-left"></div>
+    <div class="vine-decoration top-right"></div>
+    
+    <div class="game-container">
+        <!-- 左侧状态面板 -->
+        <div class="side-panel">
+            <div class="panel-card">
+                <div class="panel-label">Score</div>
+                <div id="score">0</div>
+            </div>
+            <div class="panel-card">
+                <div class="panel-label">Moves</div>
+                <div id="movesLeft">50</div>
+            </div>
+            <div class="panel-card">
+                <div class="panel-label">Goal</div>
+                <div class="goal-items">
+                    <div class="goal-item">
+                        <span class="emoji">🌻</span>
+                        <span id="sunflowerCount">0</span>/10
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 游戏区域保持不变 -->
+        <div class="game-area">
+            <canvas id="gameCanvas" width="400" height="400"></canvas>
+        </div>
+
+        <!-- 右侧道具面板 -->
+        <div class="side-panel">
+            <div class="panel-card">
+                <div class="power-item" data-type="lightning">
+                    <span class="power-icon">⚡️</span>
+                    <span class="power-count">3</span>
+                    <span class="power-tooltip">点击使用闪电消除整行</span>
+                </div>
+            </div>
+            <div class="panel-card">
+                <div class="power-item" data-type="water">
+                    <span class="power-icon">💧</span>
+                    <span class="power-count">2</span>
+                    <span class="power-tooltip">点击使用浇水消除单个方块</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js/game.js"></script>
+</body>
+</html>

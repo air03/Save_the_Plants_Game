@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+    <!-- 主体阴影 -->
+    <rect x="4" y="4" width="52" height="52" rx="10" ry="10" 
+          fill="#000000" fill-opacity="0.1" />
+    
+    <!-- 主体方块 -->
+    <rect x="2" y="2" width="52" height="52" rx="10" ry="10" 
+          fill="#ffffff" 
+          stroke="#ffffff" 
+          stroke-width="2"/>
+    
+    <!-- 内部阴影 -->
+    <rect x="4" y="4" width="48" height="48" rx="8" ry="8" 
+          fill="url(#innerShadow)"/>
+    
+    <!-- 高光效果 -->
+    <rect x="6" y="6" width="44" height="20" rx="6" ry="6" 
+          fill="url(#highlight)" 
+          fill-opacity="0.7"/>
+          
+    <!-- 渐变定义 -->
+    <defs>
+        <!-- 内部阴影渐变 -->
+        <linearGradient id="innerShadow" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.1"/>
+            <stop offset="100%" style="stop-color:#000000;stop-opacity:0.1"/>
+        </linearGradient>
+        
+        <!-- 高光渐变 -->
+        <linearGradient id="highlight" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.8"/>
+            <stop offset="100%" style="stop-color:#ffffff;stop-opacity:0"/>
+        </linearGradient>
+    </defs>
+</svg> 
